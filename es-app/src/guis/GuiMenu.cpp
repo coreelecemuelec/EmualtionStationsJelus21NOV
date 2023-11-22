@@ -145,8 +145,8 @@ GuiMenu::GuiMenu(Window *window, bool animate) : GuiComponent(window), mMenu(win
 	if (isFullUI)
 	{
 #if !defined(WIN32) || defined(_DEBUG)
-		addEntry(_("GAME SETTINGS").c_str(), true, [this] { openGamesSettings_batocera(); }, "iconGames");
-		addEntry(_("GAME COLLECTION SETTINGS").c_str(), true, [this] { openCollectionSystemSettings(); }, "iconAdvanced");
+		addEntry(_("CONFIGURAR EMULADORES LZ-UP").c_str(), true, [this] { openGamesSettings_batocera(); }, "iconGames");
+		addEntry(_("CONFIGURAR COLEÇÃO DE JOGOS").c_str(), true, [this] { openCollectionSystemSettings(); }, "iconAdvanced");
 
 		if (ApiSystem::getInstance()->isScriptingSupported(ApiSystem::RETROACHIVEMENTS) &&
 			SystemConf::getInstance()->getBool("global.retroachievements") &&
@@ -155,32 +155,32 @@ GuiMenu::GuiMenu(Window *window, bool animate) : GuiComponent(window), mMenu(win
 			addEntry(_("RETROACHIEVEMENTS").c_str(), true, [this] { GuiRetroAchievements::show(mWindow); }, "iconRetroachievements");
 
 #ifdef _ENABLEEMUELEC
-		addEntry(_("SYSTEM SETTINGS").c_str(), true, [this] { openSystemSettings_batocera(); }, "iconSystem");
+		addEntry(_("CONFIGURAÇÕES DO SISTEMA LZ-OS").c_str(), true, [this] { openSystemSettings_batocera(); }, "iconSystem");
 		//addEntry(_("EMULATIONSTATION SETTINGS").c_str(), true, [this] { openEmuELECSettings(); }, "iconEmuelec");
 #endif
-		addEntry(_("UI SETTINGS").c_str(), true, [this] { openUISettings(); }, "iconUI");
+		addEntry(_("CONFIGURAÇÕES UI").c_str(), true, [this] { openUISettings(); }, "iconUI");
 		addEntry(controllers_settings_label.c_str(), true, [this] { openControllersSettings_batocera(); }, "iconControllers");
 		addEntry(_("SOUND SETTINGS").c_str(), true, [this] { openSoundSettings(); }, "iconSound");
 
 		if (ApiSystem::getInstance()->isScriptingSupported(ApiSystem::WIFI)) {
-			addEntry(_("NETWORK SETTINGS").c_str(), true, [this] { openNetworkSettings_batocera(); }, "iconNetwork");
+			addEntry(_("CONFIGURAR NETWORK").c_str(), true, [this] { openNetworkSettings_batocera(); }, "iconNetwork");
 #if defined(AMD64) || defined(RK3326) || defined(RK3566) || defined(RK3566_X55) || defined(RK3588) || defined(RK3399)
 		  addEntry(_("MOONLIGHT GAME STREAMING").c_str(), true, [this] { GuiMoonlight::show(mWindow); }, "iconGames");
 #endif
 		}
 #else
 		if (ApiSystem::getInstance()->isScriptingSupported(ApiSystem::GAMESETTINGS))
-			addEntry(_("GAME SETTINGS").c_str(), true, [this] { openGamesSettings_batocera(); }, "iconGames");
+			addEntry(_("CONFIGURAR EMULADORES LZ-UP").c_str(), true, [this] { openGamesSettings_batocera(); }, "iconGames");
 
-		addEntry(_("UI SETTINGS").c_str(), true, [this] { openUISettings(); }, "iconUI");
+		addEntry(_("CONFIGURAÇÕES UI").c_str(), true, [this] { openUISettings(); }, "iconUI");
 
 		if (ApiSystem::getInstance()->isScriptingSupported(ApiSystem::GAMESETTINGS))
 			addEntry(controllers_settings_label.c_str(), true, [this] { openControllersSettings_batocera(); }, "iconControllers");
 		else
-			addEntry(_("CONFIGURE INPUT"), true, [this] { openConfigInput(); }, "iconControllers");
+			addEntry(_("CONFIGURAR CONTROLES"), true, [this] { openConfigInput(); }, "iconControllers");
 
-		addEntry(_("SOUND SETTINGS").c_str(), true, [this] { openSoundSettings(); }, "iconSound");
-		addEntry(_("GAME COLLECTION SETTINGS").c_str(), true, [this] { openCollectionSystemSettings(); }, "iconAdvanced");
+		addEntry(_("CONFIGURAÇÕES DE AUDIO").c_str(), true, [this] { openSoundSettings(); }, "iconSound");
+		addEntry(_("CONFIGURAR COLEÇÃO DE JOGOS").c_str(), true, [this] { openCollectionSystemSettings(); }, "iconAdvanced");
 
 		if (!ApiSystem::getInstance()->isScriptingSupported(ApiSystem::GAMESETTINGS))
 		{
@@ -189,7 +189,7 @@ GuiMenu::GuiMenu(Window *window, bool animate) : GuiComponent(window), mMenu(win
 				if (system->isCollection() || system->getEmulators().size() == 0 || (system->getEmulators().size() == 1 && system->getEmulators().begin()->cores.size() <= 1))
 					continue;
 
-				addEntry(_("EMULATOR SETTINGS"), true, [this] { openEmulatorSettings(); }, "iconGames");
+				addEntry(_("CONFIGURAÇÕES DOS EMULADORES"), true, [this] { openEmulatorSettings(); }, "iconGames");
 				break;
 			}
 		}
@@ -208,19 +208,19 @@ GuiMenu::GuiMenu(Window *window, bool animate) : GuiComponent(window), mMenu(win
 			SystemConf::getInstance()->get("global.retroachievements.username") != "")
 			addEntry(_("RETROACHIEVEMENTS").c_str(), true, [this] { GuiRetroAchievements::show(mWindow); }, "iconRetroachievements");
 
-		addEntry(_("INFORMATION").c_str(), true, [this] { openSystemInformations_batocera(); }, "iconSystem");
+		addEntry(_("INFORMAÇÕES").c_str(), true, [this] { openSystemInformations_batocera(); }, "iconSystem");
 		addEntry(_("UNLOCK UI MODE").c_str(), true, [this] { exitKidMode(); }, "iconAdvanced");
 	}
 
 #ifdef WIN32
-	addEntry(_("QUIT").c_str(), !Settings::getInstance()->getBool("ShowOnlyExit"), [this] {openQuitMenu_batocera(); }, "iconQuit");
+	addEntry(_("SAIR").c_str(), !Settings::getInstance()->getBool("ShowOnlyExit"), [this] {openQuitMenu_batocera(); }, "iconQuit");
 #else
 #ifdef _ENABLEEMUELEC
 if (!isKidUI) {
-	addEntry(_("QUIT").c_str(), true, [this] { openQuitMenu_batocera(); }, "iconQuit");
+	addEntry(_("SAIR").c_str(), true, [this] { openQuitMenu_batocera(); }, "iconQuit");
 }
 #else
-	addEntry(_("QUIT").c_str(), true, [this] { openQuitMenu_batocera(); }, "iconQuit");
+	addEntry(_("SAIR").c_str(), true, [this] { openQuitMenu_batocera(); }, "iconQuit");
 #endif
 #endif
 
@@ -247,7 +247,7 @@ if (!isKidUI) {
 /* < emuelec */
 void GuiMenu::openEmuELECSettings()
 {
-	auto s = new GuiSettings(mWindow, "EmulationStation Settings");
+	auto s = new GuiSettings(mWindow, "CONFIGURAÇÕES DO LZ-OS-EMULATIONSTATION");
 
 	Window* window = mWindow;
 	std::string a;
@@ -1002,33 +1002,9 @@ void GuiMenu::openSystemSettings_batocera()
 	if (language.empty())
 		language = "en_US";
 
-	language_choice->add("ARABIC",               "ar_YE", language == "ar_YE");
-	language_choice->add("CATALÀ",               "ca_ES", language == "ca_ES");
-	language_choice->add("CYMRAEG",              "cy_GB", language == "cy_GB");
-	language_choice->add("DEUTSCH", 	     "de_DE", language == "de_DE");
-	language_choice->add("GREEK",                "el_GR", language == "el_GR");
+	
 	language_choice->add("ENGLISH", 	     "en_US", language == "en_US" || language == "en");
-	language_choice->add("ESPAÑOL", 	     "es_ES", language == "es_ES" || language == "es");
-	language_choice->add("ESPAÑOL MEXICANO",     "es_MX", language == "es_MX");
-	language_choice->add("BASQUE",               "eu_ES", language == "eu_ES");
-	language_choice->add("FRANÇAIS",             "fr_FR", language == "fr_FR" || language == "fr");
-	language_choice->add("עברית",                "he_IL", language == "he_IL");
-	language_choice->add("HUNGARIAN",            "hu_HU", language == "hu_HU");
-	language_choice->add("ITALIANO",             "it_IT", language == "it_IT");
-	language_choice->add("JAPANESE", 	     "ja_JP", language == "ja_JP");
-	language_choice->add("KOREAN",   	     "ko_KR", language == "ko_KR" || language == "ko");
-	language_choice->add("NORWEGIAN BOKMAL",     "nb_NO", language == "nb_NO");
-	language_choice->add("DUTCH",                "nl_NL", language == "nl_NL");
-	language_choice->add("NORWEGIAN",            "nn_NO", language == "nn_NO");
-	language_choice->add("OCCITAN",              "oc_FR", language == "oc_FR");
-	language_choice->add("POLISH",               "pl_PL", language == "pl_PL");
-	language_choice->add("PORTUGUES BRASILEIRO", "pt_BR", language == "pt_BR");
-	language_choice->add("PORTUGUES PORTUGAL",   "pt_PT", language == "pt_PT");
-	language_choice->add("РУССКИЙ",              "ru_RU", language == "ru_RU");
-	language_choice->add("SVENSKA", 	     "sv_SE", language == "sv_SE");
-	language_choice->add("TÜRKÇE",  	     "tr_TR", language == "tr_TR");
-	language_choice->add("Українська",           "uk_UA", language == "uk_UA");
-	language_choice->add("简体中文", 	     "zh_CN", language == "zh_CN");
+        language_choice->add("简体中文", 	     "zh_CN", language == "zh_CN");
 	language_choice->add("正體中文", 	     "zh_TW", language == "zh_TW");
 	s->addWithLabel(_("LANGUAGE"), language_choice);
 	*/
