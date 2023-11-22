@@ -111,7 +111,7 @@ std::string GetEnv( const std::string & var ) {
      }
 }
 
-GuiMenu::GuiMenu(Window *window, bool animate) : GuiComponent(window), mMenu(window, _("MAIN MENU").c_str()), mVersion(window)
+GuiMenu::GuiMenu(Window *window, bool animate) : GuiComponent(window), mMenu(window, _("MENU LZ-OS V7").c_str()), mVersion(window)
 {
 	// MAIN MENU
 	bool isFullUI = UIModeController::getInstance()->isUIModeFull();
