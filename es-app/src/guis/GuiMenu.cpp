@@ -189,7 +189,7 @@ GuiMenu::GuiMenu(Window *window, bool animate) : GuiComponent(window), mMenu(win
 				if (system->isCollection() || system->getEmulators().size() == 0 || (system->getEmulators().size() == 1 && system->getEmulators().begin()->cores.size() <= 1))
 					continue;
 
-				addEntry(_("EMULATOR SETTINGS"), true, [this] { openEmulatorSettings(); }, "iconGames");
+				addEntry(_("CONFIGURAR EMULADORES"), true, [this] { openEmulatorSettings(); }, "iconGames");
 				break;
 			}
 		}
@@ -4597,12 +4597,12 @@ void GuiMenu::openQuitMenu_batocera_static(Window *window, bool quickAccessMenu,
 	}
 #endif
 
-	auto s = new GuiSettings(window, (quickAccessMenu ? _("QUICK ACCESS") : _("QUIT")).c_str());
+	auto s = new GuiSettings(window, (quickAccessMenu ? _("SAIR E DESLIGAR") : _("SAIR")).c_str());
 	s->setCloseButton("select");
 
 	if (quickAccessMenu)
 	{
-		s->addGroup(_("QUICK ACCESS"));
+		s->addGroup(_("ESCOLHA ABAIXO"));
 
 		// Don't like one of the songs? Press next
 		if (AudioManager::getInstance()->isSongPlaying())
@@ -4653,10 +4653,10 @@ void GuiMenu::openQuitMenu_batocera_static(Window *window, bool quickAccessMenu,
 	}
 
 	if (quickAccessMenu)
-		s->addGroup(_("QUIT"));
+		s->addGroup(_("SAIR"));
 
 #ifdef _ENABLEEMUELEC
-	s->addEntry(_("RESTART EMULATIONSTATION"), false, [window] {
+	s->addEntry(_("RESETAR EMULATIONSTATION"), false, [window] {
 		window->pushGui(new GuiMsgBox(window, _("REALLY RESTART EMULATIONSTATION?"), _("YES"),
 			[] {
     		   /*runSystemCommand("systemctl restart emustation.service", "", nullptr);*/
@@ -4691,14 +4691,14 @@ void GuiMenu::openQuitMenu_batocera_static(Window *window, bool quickAccessMenu,
 
 #endif
 
-	s->addEntry(_("RESTART SYSTEM"), false, [window] {
+	s->addEntry(_("RESTART LZ-OS"), false, [window] {
 		window->pushGui(new GuiMsgBox(window, _("REALLY RESTART?"),
 			_("YES"), [] { quitES(QuitMode::REBOOT); },
 			_("NO"), nullptr));
 	}, "iconRestart");
 
 
-	s->addEntry(_("SHUTDOWN SYSTEM"), false, [window] {
+	s->addEntry(_("DESLIGAR LZ-OS"), false, [window] {
 		window->pushGui(new GuiMsgBox(window, _("REALLY SHUTDOWN?"),
 			_("YES"), [] { quitES(QuitMode::SHUTDOWN); },
 			_("NO"), nullptr));
@@ -4715,7 +4715,7 @@ void GuiMenu::openQuitMenu_batocera_static(Window *window, bool quickAccessMenu,
 #ifdef WIN32
 	if (Settings::getInstance()->getBool("ShowExit"))
 	{
-		s->addEntry(_("QUIT EMULATIONSTATION"), false, [window] {
+		s->addEntry(_("SAIR EMULATIONSTATION"), false, [window] {
 			window->pushGui(new GuiMsgBox(window, _("REALLY QUIT?"),
 				_("YES"), [] { quitES(QuitMode::QUIT); },
 				_("NO"), nullptr));
