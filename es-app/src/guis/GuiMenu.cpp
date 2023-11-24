@@ -170,7 +170,7 @@ GuiMenu::GuiMenu(Window *window, bool animate) : GuiComponent(window), mMenu(win
 		}
 #else
 		if (ApiSystem::getInstance()->isScriptingSupported(ApiSystem::GAMESETTINGS))
-			addEntry(_("GAME SETTINGS").c_str(), true, [this] { openGamesSettings_batocera(); }, "iconGames");
+			addEntry(_("CONFIGURE LZ-OS SYSTEM").c_str(), true, [this] { openGamesSettings_batocera(); }, "iconGames");
 
 		addEntry(_("CONFIGURAR UI").c_str(), true, [this] { openUISettings(); }, "iconUI");
 
@@ -2304,7 +2304,7 @@ void GuiMenu::openGamesSettings_batocera()
 			!Settings::getInstance()->getBool("RetroachievementsMenuitem") &&
 			SystemConf::getInstance()->get("global.retroachievements.username") != "")
 		{
-			s->addEntry(_("RETROACHIEVEMENTS").c_str(), true, [this]
+			s->addEntry(_("RETROCONQUISTAS").c_str(), true, [this]
 			{
 				if (!checkNetwork())
 					return;
@@ -2314,13 +2314,13 @@ void GuiMenu::openGamesSettings_batocera()
 		}
 	}
 
-	s->addGroup(_("DEFAULT GLOBAL SETTINGS"));
+	s->addGroup(_("MODO GLOBAL DE CONFIGURAR"));
 
 	// Screen ratio choice
 	if (SystemConf::getInstance()->get("system.es.menu") != "bartop")
 	{
 		auto ratio_choice = createRatioOptionList(mWindow, "global");
-		s->addWithLabel(_("GAME ASPECT RATIO"), ratio_choice);
+		s->addWithLabel(_("MODOS DE ASPECTO DO JOGO"), ratio_choice);
 		s->addSaveFunc([ratio_choice] { SystemConf::getInstance()->set("global.ratio", ratio_choice->getSelected()); });
 	}
 #ifndef _ENABLEEMUELEC
@@ -2328,15 +2328,15 @@ void GuiMenu::openGamesSettings_batocera()
 	if (ApiSystem::getInstance()->isScriptingSupported(ApiSystem::RESOLUTION))
 	{
 		auto videoModeOptionList = createVideoResolutionModeOptionList(mWindow, "global");
-		s->addWithLabel(_("VIDEO MODE"), videoModeOptionList);
+		s->addWithLabel(_("MODOS DE VIDEO"), videoModeOptionList);
 		s->addSaveFunc([this, videoModeOptionList] { SystemConf::getInstance()->set("global.videomode", videoModeOptionList->getSelected()); });
 	}
 #endif
 
 	// bilinear filtering
-	auto smoothing_enabled = std::make_shared<OptionListComponent<std::string>>(mWindow, _("BILINEAR FILTERING"));
+	auto smoothing_enabled = std::make_shared<OptionListComponent<std::string>>(mWindow, _("FILTRO BILINEAR"));
 	smoothing_enabled->addRange({ { _("DEFAULT"), "default" },{ _("ON") , "1" },{ _("OFF") , "0" } }, SystemConf::getInstance()->get("global.smooth"));
-	s->addWithLabel(_("BILINEAR FILTERING"), smoothing_enabled);
+	s->addWithLabel(_("FILTRO BILINEAR"), smoothing_enabled);
 	s->addSaveFunc([smoothing_enabled] { SystemConf::getInstance()->set("global.smooth", smoothing_enabled->getSelected()); });
 
 #ifdef _ENABLEEMUELEC
@@ -2361,19 +2361,19 @@ void GuiMenu::openGamesSettings_batocera()
 #endif
 	
 	// rewind
-	auto rewind_enabled = std::make_shared<OptionListComponent<std::string>>(mWindow, _("REWIND"));
+	auto rewind_enabled = std::make_shared<OptionListComponent<std::string>>(mWindow, _("RETROCEDER"));
 	rewind_enabled->addRange({ { _("DEFAULT"), "default" },{ _("ON") , "1" },{ _("OFF") , "0" } }, SystemConf::getInstance()->get("global.rewind"));
-	s->addWithLabel(_("REWIND"), rewind_enabled);
+	s->addWithLabel(_("RETROCEDER"), rewind_enabled);
 	s->addSaveFunc([rewind_enabled] { SystemConf::getInstance()->set("global.rewind", rewind_enabled->getSelected()); });
 
 	// Integer scale
-	auto integerscale_enabled = std::make_shared<OptionListComponent<std::string>>(mWindow, _("INTEGER SCALING (PIXEL PERFECT)"));
+	auto integerscale_enabled = std::make_shared<OptionListComponent<std::string>>(mWindow, _("ESCALA INTEIRA (PIXEL PERFEITO)"));
 	integerscale_enabled->addRange({ { _("DEFAULT"), "default" },{ _("ON") , "1" },{ _("OFF") , "0" } }, SystemConf::getInstance()->get("global.integerscale"));
-	s->addWithLabel(_("INTEGER SCALING (PIXEL PERFECT)"), integerscale_enabled);
+	s->addWithLabel(_("ESCALA INTEIRA (PIXEL PERFEITO)"), integerscale_enabled);
 	s->addSaveFunc([integerscale_enabled] { SystemConf::getInstance()->set("global.integerscale", integerscale_enabled->getSelected()); });
 	
 	// Saves Menu
-	s->addEntry(_("SAVE STATE CONFIG"), true, [this] { openSavestatesConfiguration(mWindow, "global"); });
+	s->addEntry(_("CONFIGURAR SAVE STATE"), true, [this] { openSavestatesConfiguration(mWindow, "global"); });
 
 
 
@@ -2387,7 +2387,7 @@ void GuiMenu::openGamesSettings_batocera()
 #endif
 			std::string currentShader = SystemConf::getInstance()->get("global.shaderset");
 
-			auto shaders_choices = std::make_shared<OptionListComponent<std::string> >(mWindow, _("SHADER SET"), false);
+			auto shaders_choices = std::make_shared<OptionListComponent<std::string> >(mWindow, _("ESCOLHER SHADER"), false);
 			shaders_choices->add(_("DEFAULT"), "default", currentShader.empty() || currentShader == "default");
 			shaders_choices->add(_("NONE"), "none", currentShader == "none");
 
@@ -2412,13 +2412,13 @@ void GuiMenu::openGamesSettings_batocera()
 
 	// Filters preset
 	std::string currentFilter = SystemConf::getInstance()->get("global.filterset");
-	auto filters_choices = std::make_shared<OptionListComponent<std::string> >(mWindow, _("FILTER SET"), false);
+	auto filters_choices = std::make_shared<OptionListComponent<std::string> >(mWindow, _("ESCOLHA FILTRO"), false);
 	filters_choices->add(_("DEFAULT"), "default", currentFilter.empty() || currentFilter == "default");
 	filters_choices->add(_("NONE"), "none", currentFilter == "none");
 	std::string filterList;
 	for(std::stringstream ss(getShOutput(R"(/usr/bin/getfilters)")); getline(ss, filterList, ','); )
 		filters_choices->add(filterList, filterList, currentFilter == filterList); // emuelec
-	s->addWithLabel(_("FILTER SET"), filters_choices);
+	s->addWithLabel(_("ESCOLHA FILTRO"), filters_choices);
 	s->addSaveFunc([filters_choices] { SystemConf::getInstance()->set("global.filterset", filters_choices->getSelected()); });
 
 	// decorations
@@ -2427,7 +2427,7 @@ void GuiMenu::openGamesSettings_batocera()
 		auto sets = GuiMenu::getDecorationsSets(ViewController::get()->getState().getSystem());
 		if (sets.size() > 0)
 		{
-				auto decorations = std::make_shared<OptionListComponent<std::string> >(mWindow, _("DECORATION SET"), false);
+				auto decorations = std::make_shared<OptionListComponent<std::string> >(mWindow, _("INFEITES DE SET"), false);
 				decorations->setRowTemplate([window, sets](std::string data, ComponentListRow& row)
 				{
 					createDecorationItemTemplate(window, sets, data, row);
@@ -2517,10 +2517,10 @@ void GuiMenu::openGamesSettings_batocera()
 	}
 
 	// latency reduction
-	s->addEntry(_("LATENCY REDUCTION"), true, [this] { openLatencyReductionConfiguration(mWindow, "global"); });
+	s->addEntry(_("REDUZIR A LATENCIA"), true, [this] { openLatencyReductionConfiguration(mWindow, "global"); });
 
 	//AI-enabled translations
-	s->addEntry(_("AI GAME TRANSLATION"), true, [this]
+	s->addEntry(_("AI PARA TRADUZIR"), true, [this]
 	{
 		GuiSettings *ai_service = new GuiSettings(mWindow, _("AI GAME TRANSLATION").c_str());
 
@@ -2688,7 +2688,7 @@ void GuiMenu::openGamesSettings_batocera()
 				SystemConf::getInstance()->get("global.retroachievements.username") != "")
 				s->addEntry(_("RETROACHIEVEMENTS").c_str(), true, [this] { GuiRetroAchievements::show(mWindow); }, "iconRetroachievements");
 				*/
-			s->addEntry(_("RETROACHIEVEMENT SETTINGS"), true, [this] { openRetroachievementsSettings(); });
+			s->addEntry(_("CONFIGURAR RETROACHIEVEMENT"), true, [this] { openRetroachievementsSettings(); });
 		}
 
 		// Netplay
