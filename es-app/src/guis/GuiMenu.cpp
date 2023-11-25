@@ -3044,7 +3044,7 @@ void GuiMenu::openControllersSettings_batocera(int autoSel)
 	// CONTROLLER ACTIVITY
 	auto activity = std::make_shared<SwitchComponent>(mWindow);
 	activity->setState(Settings::getInstance()->getBool("ShowControllerActivity"));
-	s->addWithLabel(_("SHOW CONTROLLER ACTIVITY"), activity, autoSel == 1);
+	s->addWithLabel(_("MOSNTRAR CONTROLE ATIVO"), activity, autoSel == 1);
 	activity->setOnChangedCallback([this, s, activity]
 	{
 		if (Settings::getInstance()->setBool("ShowControllerActivity", activity->getState()))
@@ -3059,7 +3059,7 @@ void GuiMenu::openControllersSettings_batocera(int autoSel)
 		// CONTROLLER BATTERY
 		auto battery = std::make_shared<SwitchComponent>(mWindow);
 		battery->setState(Settings::getInstance()->getBool("ShowControllerBattery"));
-		s->addWithLabel(_("SHOW CONTROLLER BATTERY LEVEL"), battery);
+		s->addWithLabel(_("MOSTRAR NIVEL DE BATERIA DO CONTROLADOR"), battery);
 		s->addSaveFunc([battery] { Settings::getInstance()->setBool("ShowControllerBattery", battery->getState()); });
 	}
 
