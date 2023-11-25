@@ -1679,10 +1679,10 @@ void GuiMenu::openSystemSettings_batocera()
 	{
 		// Retroachievements
 		if (ApiSystem::getInstance()->isScriptingSupported(ApiSystem::RETROACHIVEMENTS))
-			s->addEntry(_("RETROACHIEVEMENT SETTINGS"), true, [this] { openRetroachievementsSettings(); });
+			s->addEntry(_("CONFIGURAR RETROACHIEVEMENT"), true, [this] { openRetroachievementsSettings(); });
 
 		if (SystemData::isNetplayActivated() && ApiSystem::getInstance()->isScriptingSupported(ApiSystem::NETPLAY))
-			s->addEntry(_("NETPLAY SETTINGS"), true, [this] { openNetplaySettings(); }, "iconNetplay");
+			s->addEntry(_("CONFIGURAR NETPLAY"), true, [this] { openNetplaySettings(); }, "iconNetplay");
 
 //		if (ApiSystem::getInstance()->isScriptingSupported(ApiSystem::BIOSINFORMATION))
 //		{
@@ -2009,9 +2009,9 @@ void GuiMenu::openLatencyReductionConfiguration(Window* mWindow, std::string con
 void GuiMenu::openRetroachievementsSettings()
 {
 	Window* window = mWindow;
-	GuiSettings* retroachievements = new GuiSettings(mWindow, _("RETROACHIEVEMENT SETTINGS").c_str());
+	GuiSettings* retroachievements = new GuiSettings(mWindow, _("CONFIGURAR RETROACHIEVEMENT").c_str());
 
-	retroachievements->addGroup(_("SETTINGS"));
+	retroachievements->addGroup(_("CONFIGURAR"));
 
 	bool retroachievementsEnabled = SystemConf::getInstance()->getBool("global.retroachievements");
 	std::string username = SystemConf::getInstance()->get("global.retroachievements.username");
@@ -2677,7 +2677,7 @@ void GuiMenu::openGamesSettings_batocera()
 
 	if (SystemConf::getInstance()->get("system.es.menu") != "bartop")
 	{
-		s->addGroup(_("SYSTEM SETTINGS"));
+		s->addGroup(_("CONFIGURAR SYSTEMA LZ-OS"));
 
 		// Retroachievements
 		if (ApiSystem::getInstance()->isScriptingSupported(ApiSystem::RETROACHIVEMENTS))
@@ -4251,11 +4251,11 @@ void GuiMenu::openNetworkSettings_batocera(bool selectWifiEnable, bool selectAdh
 
 	Window *window = mWindow;
 
-	auto s = new GuiSettings(mWindow, _("NETWORK SETTINGS").c_str());
-	s->addGroup(_("INFORMATION"));
+	auto s = new GuiSettings(mWindow, _("CONFIGURE REDE DE INTERNET").c_str());
+	s->addGroup(_("INFORMACAO"));
 
 	auto ip = std::make_shared<TextComponent>(mWindow, ApiSystem::getInstance()->getIpAdress(), font, color);
-	s->addWithLabel(_("IP ADDRESS"), ip);
+	s->addWithLabel(_("IP ENDERECO"), ip);
 
 	auto status = std::make_shared<TextComponent>(mWindow, ApiSystem::getInstance()->ping() ? _("CONNECTED") : _("NOT CONNECTED"), font, color);
 	s->addWithLabel(_("INTERNET STATUS"), status);
@@ -4263,10 +4263,10 @@ void GuiMenu::openNetworkSettings_batocera(bool selectWifiEnable, bool selectAdh
 	// Network Indicator
 	auto networkIndicator = std::make_shared<SwitchComponent>(mWindow);
 	networkIndicator->setState(Settings::getInstance()->getBool("ShowNetworkIndicator"));
-	s->addWithLabel(_("SHOW NETWORK INDICATOR"), networkIndicator);
+	s->addWithLabel(_("MOSTRAR INDICADOR DE INTERNET"), networkIndicator);
 	s->addSaveFunc([networkIndicator] { Settings::getInstance()->setBool("ShowNetworkIndicator", networkIndicator->getState()); });
 
-	s->addGroup(_("NETWORK CONFIGURATION"));
+	s->addGroup(_("CONFIGURE REDE DE INTERNET"));
 
 #if !WIN32
 	// Hostname
@@ -4280,7 +4280,7 @@ void GuiMenu::openNetworkSettings_batocera(bool selectWifiEnable, bool selectAdh
         enable_net->setState(baseNetworkEnabled);
 	enable_adhoc->setState(adhocEnabled);
 
-        s->addWithLabel(_("ENABLE NETWORK"), enable_net, selectWifiEnable);
+        s->addWithLabel(_("LIGAR INTERNET"), enable_net, selectWifiEnable);
 
 	// window, title, settingstring,
 	const std::string baseSSID = SystemConf::getInstance()->get("wifi.ssid");
@@ -4301,7 +4301,7 @@ void GuiMenu::openNetworkSettings_batocera(bool selectWifiEnable, bool selectAdh
         auto ipv6_enable = std::make_shared<SwitchComponent>(mWindow);
         bool ipv6Enabled = SystemConf::getInstance()->get("ipv6.enabled") == "1";
         ipv6_enable->setState(ipv6Enabled);
-        s->addWithLabel(_("ENABLE IPV6"), ipv6_enable);
+        s->addWithLabel(_("LIGAR IPV6"), ipv6_enable);
         s->addSaveFunc([ipv6_enable] {
                 bool ipv6Enabled = ipv6_enable->getState();
                 SystemConf::getInstance()->set("ipv6.enabled", ipv6Enabled ? "1" : "0");
@@ -4309,10 +4309,10 @@ void GuiMenu::openNetworkSettings_batocera(bool selectWifiEnable, bool selectAdh
                 runSystemCommand("/usr/bin/toggle-ipv6", "", nullptr);
         });
 
-	s->addGroup(_("LOCAL NETPLAY SETTINGS"));
+	s->addGroup(_("CONFIGURE NETPLAY"));
 	// Adhoc mode options
        enable_adhoc->setState(adhocEnabled);
-       s->addWithLabel(_("LOCAL PLAY MODE"), enable_adhoc, selectAdhocEnable);
+       s->addWithLabel(_("LOCAL MODO DE JOGO"), enable_adhoc, selectAdhocEnable);
 
 	if (selectedAdhocID.empty())
 	{
@@ -4340,7 +4340,7 @@ void GuiMenu::openNetworkSettings_batocera(bool selectWifiEnable, bool selectAdh
         if (!wfound)
                 optionsChannels->add(selectedChannel, selectedChannel, true);
 
-        s->addWithLabel(_("LOCAL NETWORK CHANNEL"), optionsChannels);
+        s->addWithLabel(_("CANAL DE INTERNET LOCAL"), optionsChannels);
 
 	s->addSaveFunc([baseNetworkEnabled, adhocEnabled, baseSSID, baseKEY, enable_net, enable_adhoc, optionsAdhocID, selectedAdhocID, optionsChannels, selectedChannel, window]
 	{
@@ -4422,12 +4422,12 @@ void GuiMenu::openNetworkSettings_batocera(bool selectWifiEnable, bool selectAdh
 	});
 */
 
-	s->addGroup(_("NETWORK SERVICES"));
+	s->addGroup(_("SERVICOS DE INTERNET"));
 
        auto sshd_enabled = std::make_shared<SwitchComponent>(mWindow);
                 bool sshbaseEnabled = SystemConf::getInstance()->get("ssh.enabled") == "1";
                 sshd_enabled->setState(sshbaseEnabled);
-                s->addWithLabel(_("ENABLE SSH"), sshd_enabled);
+                s->addWithLabel(_("LIGAR SSH"), sshd_enabled);
                 s->addSaveFunc([sshd_enabled] {
                         if (sshd_enabled->getState() == false) {
                                 runSystemCommand("systemctl stop sshd", "", nullptr);
@@ -4447,7 +4447,7 @@ void GuiMenu::openNetworkSettings_batocera(bool selectWifiEnable, bool selectAdh
        auto samba_enabled = std::make_shared<SwitchComponent>(mWindow);
                 bool smbbaseEnabled = SystemConf::getInstance()->get("samba.enabled") == "1";
                 samba_enabled->setState(smbbaseEnabled);
-                s->addWithLabel(_("ENABLE SAMBA"), samba_enabled);
+                s->addWithLabel(_("LIGAR SAMBA"), samba_enabled);
                 s->addSaveFunc([samba_enabled] {
                         if (samba_enabled->getState() == false) {
                                 runSystemCommand("systemctl stop nmbd", "", nullptr);
@@ -4465,7 +4465,7 @@ void GuiMenu::openNetworkSettings_batocera(bool selectWifiEnable, bool selectAdh
                 });
 
 
-	s->addGroup(_("CLOUD SERVICES"));
+	s->addGroup(_("CLOUD SERVICOS"));
 
        auto enable_syncthing = std::make_shared<SwitchComponent>(mWindow);
                 bool syncthingEnabled = SystemConf::getInstance()->get("syncthing.enabled") == "1";
