@@ -4090,7 +4090,7 @@ void GuiMenu::openUISettings()
 
 void GuiMenu::openSoundSettings()
 {
-	auto s = new GuiSettings(mWindow, _("SOUND SETTINGS").c_str());
+	auto s = new GuiSettings(mWindow, _("CONFIGUAR O AUDIO").c_str());
 
 	if (GetEnv("DEVICE_SW_HP_SWITCH") == "true") {
 		s->addGroup(_("OUTPUT"));
@@ -4134,21 +4134,21 @@ void GuiMenu::openSoundSettings()
 		auto musicVolume = std::make_shared<SliderComponent>(mWindow, 0.f, 100.f, 1.f, "%");
 		musicVolume->setValue(Settings::getInstance()->getInt("MusicVolume"));
 		musicVolume->setOnValueChanged([](const float &newVal) { Settings::getInstance()->setInt("MusicVolume", (int)round(newVal)); });
-		s->addWithLabel(_("MUSIC VOLUME"), musicVolume);
+		s->addWithLabel(_("VOLUME DA MUSICA"), musicVolume);
 		//s->addSaveFunc([this, musicVolume] { Settings::getInstance()->setInt("MusicVolume", (int)round(musicVolume->getValue())); });
 
 		auto volumePopup = std::make_shared<SwitchComponent>(mWindow);
 		volumePopup->setState(Settings::getInstance()->getBool("VolumePopup"));
-		s->addWithLabel(_("SHOW OVERLAY WHEN VOLUME CHANGES"), volumePopup);
+		s->addWithLabel(_("MOSTRAR E SOBREPOR QUANDO O VOLUME MUDAR"), volumePopup);
 		s->addSaveFunc([volumePopup] { Settings::getInstance()->setBool("VolumePopup", volumePopup->getState()); });
 	}
 
-	s->addGroup(_("MUSIC"));
+	s->addGroup(_("MUSICA"));
 
 	// disable sounds
 	auto music_enabled = std::make_shared<SwitchComponent>(mWindow);
 	music_enabled->setState(Settings::getInstance()->getBool("audio.bgmusic"));
-	s->addWithLabel(_("FRONTEND MUSIC"), music_enabled);
+	s->addWithLabel(_("MUSICA DE FRONT END"), music_enabled);
 	s->addSaveFunc([music_enabled]
 	{
 		if (Settings::getInstance()->setBool("audio.bgmusic", music_enabled->getState()))
@@ -4163,7 +4163,7 @@ void GuiMenu::openSoundSettings()
 	// batocera - display music titles
 	auto display_titles = std::make_shared<SwitchComponent>(mWindow);
 	display_titles->setState(Settings::getInstance()->getBool("audio.display_titles"));
-	s->addWithLabel(_("DISPLAY SONG TITLES"), display_titles);
+	s->addWithLabel(_("EXIBIR TITULOS DE MUSICAS"), display_titles);
 	s->addSaveFunc([display_titles] {
 		Settings::getInstance()->setBool("audio.display_titles", display_titles->getState());
 	});
@@ -4171,7 +4171,7 @@ void GuiMenu::openSoundSettings()
 	// batocera - how long to display the song titles?
 	auto titles_time = std::make_shared<SliderComponent>(mWindow, 2.f, 120.f, 2.f, "s");
 	titles_time->setValue(Settings::getInstance()->getInt("audio.display_titles_time"));
-	s->addWithLabel(_("SONG TITLE DISPLAY DURATION"), titles_time);
+	s->addWithLabel(_("TEMPO DE REPRODUZIR DO TITULO DA MUSICA"), titles_time);
 	s->addSaveFunc([titles_time] {
 		Settings::getInstance()->setInt("audio.display_titles_time", (int)Math::round(titles_time->getValue()));
 	});
@@ -4179,7 +4179,7 @@ void GuiMenu::openSoundSettings()
 	// batocera - music per system
 	auto music_per_system = std::make_shared<SwitchComponent>(mWindow);
 	music_per_system->setState(Settings::getInstance()->getBool("audio.persystem"));
-	s->addWithLabel(_("ONLY PLAY SYSTEM-SPECIFIC MUSIC FOLDER"), music_per_system);
+	s->addWithLabel(_("REPRODUZIR APENAS PASTA DE MUSICA ESPECIFICA DO SISTEMA"), music_per_system);
 	s->addSaveFunc([music_per_system] {
 		if (Settings::getInstance()->setBool("audio.persystem", music_per_system->getState()))
 			AudioManager::getInstance()->changePlaylist(ViewController::get()->getState().getSystem()->getTheme(), true);
@@ -4188,7 +4188,7 @@ void GuiMenu::openSoundSettings()
 	// batocera - music per system
 	auto enableThemeMusics = std::make_shared<SwitchComponent>(mWindow);
 	enableThemeMusics->setState(Settings::getInstance()->getBool("audio.thememusics"));
-	s->addWithLabel(_("PLAY SYSTEM-SPECIFIC MUSIC"), enableThemeMusics);
+	s->addWithLabel(_("TOCAR MUSICA ESPECIFICA DO SISTEMA"), enableThemeMusics);
 	s->addSaveFunc([enableThemeMusics] {
 		if (Settings::getInstance()->setBool("audio.thememusics", enableThemeMusics->getState()))
 			AudioManager::getInstance()->changePlaylist(ViewController::get()->getState().getSystem()->getTheme(), true);
@@ -4196,15 +4196,15 @@ void GuiMenu::openSoundSettings()
 
 	auto videolowermusic = std::make_shared<SwitchComponent>(mWindow);
 	videolowermusic->setState(Settings::getInstance()->getBool("VideoLowersMusic"));
-	s->addWithLabel(_("LOWER MUSIC WHEN PLAYING VIDEO"), videolowermusic);
+	s->addWithLabel(_("BAIXE A MUSICA AO REPRODUZIR VÍDEO"), videolowermusic);
 	s->addSaveFunc([videolowermusic] { Settings::getInstance()->setBool("VideoLowersMusic", videolowermusic->getState()); });
 
-	s->addGroup(_("SOUNDS"));
+	s->addGroup(_("MUSICAS"));
 
 	// disable sounds
 	auto sounds_enabled = std::make_shared<SwitchComponent>(mWindow);
 	sounds_enabled->setState(Settings::getInstance()->getBool("EnableSounds"));
-	s->addWithLabel(_("ENABLE NAVIGATION SOUNDS"), sounds_enabled);
+	s->addWithLabel(_("ATIVAR SONS AO MOVER"), sounds_enabled);
 	s->addSaveFunc([sounds_enabled]
 	{
 	    if (sounds_enabled->getState() && !Settings::getInstance()->getBool("EnableSounds") && PowerSaver::getMode() == PowerSaver::INSTANT)
@@ -4218,7 +4218,7 @@ void GuiMenu::openSoundSettings()
         auto batteryWarning = std::make_shared<SwitchComponent>(mWindow);
         bool batteryWarningEnabled = SystemConf::getInstance()->get("system.battery.warning") == "1";
         batteryWarning->setState(batteryWarningEnabled);
-        s->addWithLabel(_("ENABLE AUDIBLE BATTERY WARNING"), batteryWarning);
+        s->addWithLabel(_("ATIVAR AVISO SONORO DE BATERIA"), batteryWarning);
         s->addSaveFunc([batteryWarning] {
                 bool batteryWarningEnabled = batteryWarning->getState();
                 SystemConf::getInstance()->set("system.battery.warning", batteryWarningEnabled ? "1" : "0");
@@ -4227,7 +4227,7 @@ void GuiMenu::openSoundSettings()
 
 	auto video_audio = std::make_shared<SwitchComponent>(mWindow);
 	video_audio->setState(Settings::getInstance()->getBool("VideoAudio"));
-	s->addWithLabel(_("ENABLE VIDEO PREVIEW AUDIO"), video_audio);
+	s->addWithLabel(_("ATIVAR AUDIO AO VISUALIZAR O VIDEO"), video_audio);
 	s->addSaveFunc([video_audio] { Settings::getInstance()->setBool("VideoAudio", video_audio->getState()); });
 
 
