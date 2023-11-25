@@ -4196,7 +4196,7 @@ void GuiMenu::openSoundSettings()
 
 	auto videolowermusic = std::make_shared<SwitchComponent>(mWindow);
 	videolowermusic->setState(Settings::getInstance()->getBool("VideoLowersMusic"));
-	s->addWithLabel(_("BAIXE A MUSICA AO REPRODUZIR VÍDEO"), videolowermusic);
+	s->addWithLabel(_("BAIXE A MUSICA AO REPRODUZIR VIDEO"), videolowermusic);
 	s->addSaveFunc([videolowermusic] { Settings::getInstance()->setBool("VideoLowersMusic", videolowermusic->getState()); });
 
 	s->addGroup(_("MUSICAS"));
