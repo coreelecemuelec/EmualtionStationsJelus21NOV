@@ -2538,27 +2538,27 @@ void GuiMenu::openGamesSettings_batocera()
 		if (currentLang.empty())
 			currentLang = std::string("En");
 		lang_choices->add("ENGLISH", "En", currentLang == "En");
-		//lang_choices->add("FRANÇAIS", "Fr", currentLang == "Fr");
-		//lang_choices->add("PORTUGUES", "Pt", currentLang == "Pt");
-		//lang_choices->add("DEUTSCH", "De", currentLang == "De");
-		//lang_choices->add("GREEK", "El", currentLang == "El");
-		//lang_choices->add("ESPAÑOL", "Es", currentLang == "Es");
-		//lang_choices->add("CZECH", "Cs", currentLang == "Cs");
-		//lang_choices->add("DANISH", "Da", currentLang == "Da");
-		//lang_choices->add("CROATIAN", "Hr", currentLang == "Hr");
-		//lang_choices->add("HUNGARIAN", "Hu", currentLang == "Hu");
-		//lang_choices->add("ITALIANO", "It", currentLang == "It");
-		//lang_choices->add("JAPANESE", "Ja", currentLang == "Ja");
-		//lang_choices->add("KOREAN", "Ko", currentLang == "Ko");
-		//lang_choices->add("DUTCH", "Nl", currentLang == "Nl");
-		//lang_choices->add("NORWEGIAN", "Nn", currentLang == "Nn");
-		//lang_choices->add("POLISH", "Po", currentLang == "Po");
-		//lang_choices->add("ROMANIAN", "Ro", currentLang == "Ro");
-		//lang_choices->add("РУССКИЙ", "Ru", currentLang == "Ru");
-		//lang_choices->add("SVENSKA", "Sv", currentLang == "Sv");
-		//lang_choices->add("TÜRKÇE", "Tr", currentLang == "Tr");
-		//lang_choices->add("简体中文", "Zh", currentLang == "Zh");
-		//ai_service->addWithLabel(_("TARGET LANGUAGE"), lang_choices);
+		lang_choices->add("FRANÇAIS", "Fr", currentLang == "Fr");
+		lang_choices->add("PORTUGUES", "Pt", currentLang == "Pt");
+		lang_choices->add("DEUTSCH", "De", currentLang == "De");
+		lang_choices->add("GREEK", "El", currentLang == "El");
+		lang_choices->add("ESPAÑOL", "Es", currentLang == "Es");
+		lang_choices->add("CZECH", "Cs", currentLang == "Cs");
+		lang_choices->add("DANISH", "Da", currentLang == "Da");
+		lang_choices->add("CROATIAN", "Hr", currentLang == "Hr");
+		lang_choices->add("HUNGARIAN", "Hu", currentLang == "Hu");
+		lang_choices->add("ITALIANO", "It", currentLang == "It");
+		lang_choices->add("JAPANESE", "Ja", currentLang == "Ja");
+		lang_choices->add("KOREAN", "Ko", currentLang == "Ko");
+		lang_choices->add("DUTCH", "Nl", currentLang == "Nl");
+		lang_choices->add("NORWEGIAN", "Nn", currentLang == "Nn");
+		lang_choices->add("POLISH", "Po", currentLang == "Po");
+		lang_choices->add("ROMANIAN", "Ro", currentLang == "Ro");
+		lang_choices->add("РУССКИЙ", "Ru", currentLang == "Ru");
+		lang_choices->add("SVENSKA", "Sv", currentLang == "Sv");
+		lang_choices->add("TÜRKÇE", "Tr", currentLang == "Tr");
+		lang_choices->add("简体中文", "Zh", currentLang == "Zh");
+		ai_service->addWithLabel(_("TARGET LANGUAGE"), lang_choices);
 
 		// Service  URL
 		ai_service->addInputTextRow(_("AI TRANSLATION SERVICE URL"), "global.ai_service_url", false);
