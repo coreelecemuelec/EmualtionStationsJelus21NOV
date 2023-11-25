@@ -2522,13 +2522,13 @@ void GuiMenu::openGamesSettings_batocera()
 	//AI-enabled translations
 	s->addEntry(_("AI PARA TRADUZIR"), true, [this]
 	{
-		GuiSettings *ai_service = new GuiSettings(mWindow, _("AI GAME TRANSLATION").c_str());
+		GuiSettings *ai_service = new GuiSettings(mWindow, _("TRADUZIR JOGOS POR IA").c_str());
 
 		// AI service enabled?
 		auto ai_service_enabled = std::make_shared<SwitchComponent>(mWindow);
 		ai_service_enabled->setState(
 			SystemConf::getInstance()->get("global.ai_service_enabled") == "1");
-		ai_service->addWithLabel(_("ENABLE AI TRANSLATION SERVICE"), ai_service_enabled);
+		ai_service->addWithLabel(_("LIGAR E TRADUZIR POR IA"), ai_service_enabled);
 
 		// Target language - order is: popular languages in the Batocera community first
 		// then alphabetical order of the 2-char lang code (because the strings are localized)
@@ -2538,27 +2538,27 @@ void GuiMenu::openGamesSettings_batocera()
 		if (currentLang.empty())
 			currentLang = std::string("En");
 		lang_choices->add("ENGLISH", "En", currentLang == "En");
-		lang_choices->add("FRANÇAIS", "Fr", currentLang == "Fr");
-		lang_choices->add("PORTUGUES", "Pt", currentLang == "Pt");
-		lang_choices->add("DEUTSCH", "De", currentLang == "De");
-		lang_choices->add("GREEK", "El", currentLang == "El");
-		lang_choices->add("ESPAÑOL", "Es", currentLang == "Es");
-		lang_choices->add("CZECH", "Cs", currentLang == "Cs");
-		lang_choices->add("DANISH", "Da", currentLang == "Da");
-		lang_choices->add("CROATIAN", "Hr", currentLang == "Hr");
-		lang_choices->add("HUNGARIAN", "Hu", currentLang == "Hu");
-		lang_choices->add("ITALIANO", "It", currentLang == "It");
-		lang_choices->add("JAPANESE", "Ja", currentLang == "Ja");
-		lang_choices->add("KOREAN", "Ko", currentLang == "Ko");
-		lang_choices->add("DUTCH", "Nl", currentLang == "Nl");
-		lang_choices->add("NORWEGIAN", "Nn", currentLang == "Nn");
-		lang_choices->add("POLISH", "Po", currentLang == "Po");
-		lang_choices->add("ROMANIAN", "Ro", currentLang == "Ro");
-		lang_choices->add("РУССКИЙ", "Ru", currentLang == "Ru");
-		lang_choices->add("SVENSKA", "Sv", currentLang == "Sv");
-		lang_choices->add("TÜRKÇE", "Tr", currentLang == "Tr");
-		lang_choices->add("简体中文", "Zh", currentLang == "Zh");
-		ai_service->addWithLabel(_("TARGET LANGUAGE"), lang_choices);
+		//lang_choices->add("FRANÇAIS", "Fr", currentLang == "Fr");
+		//lang_choices->add("PORTUGUES", "Pt", currentLang == "Pt");
+		//lang_choices->add("DEUTSCH", "De", currentLang == "De");
+		//lang_choices->add("GREEK", "El", currentLang == "El");
+		//lang_choices->add("ESPAÑOL", "Es", currentLang == "Es");
+		//lang_choices->add("CZECH", "Cs", currentLang == "Cs");
+		//lang_choices->add("DANISH", "Da", currentLang == "Da");
+		//lang_choices->add("CROATIAN", "Hr", currentLang == "Hr");
+		//lang_choices->add("HUNGARIAN", "Hu", currentLang == "Hu");
+		//lang_choices->add("ITALIANO", "It", currentLang == "It");
+		//lang_choices->add("JAPANESE", "Ja", currentLang == "Ja");
+		//lang_choices->add("KOREAN", "Ko", currentLang == "Ko");
+		//lang_choices->add("DUTCH", "Nl", currentLang == "Nl");
+		//lang_choices->add("NORWEGIAN", "Nn", currentLang == "Nn");
+		//lang_choices->add("POLISH", "Po", currentLang == "Po");
+		//lang_choices->add("ROMANIAN", "Ro", currentLang == "Ro");
+		//lang_choices->add("РУССКИЙ", "Ru", currentLang == "Ru");
+		//lang_choices->add("SVENSKA", "Sv", currentLang == "Sv");
+		//lang_choices->add("TÜRKÇE", "Tr", currentLang == "Tr");
+		//lang_choices->add("简体中文", "Zh", currentLang == "Zh");
+		//ai_service->addWithLabel(_("TARGET LANGUAGE"), lang_choices);
 
 		// Service  URL
 		ai_service->addInputTextRow(_("AI TRANSLATION SERVICE URL"), "global.ai_service_url", false);
@@ -2862,7 +2862,7 @@ void GuiMenu::openControllersSettings_batocera(int autoSel)
 	Window *window = mWindow;
 
 	// CONTROLLER CONFIGURATION
-	s->addEntry(_("CONTROLLER MAPPING"), false, [window, this, s]
+	s->addEntry(_("MAPEAR CONTROLE"), false, [window, this, s]
 	{
 		window->pushGui(new GuiMsgBox(window,
 			_("YOU ARE GOING TO MAP A CONTROLLER. MAP BASED ON THE BUTTON'S POSITION "
@@ -3044,7 +3044,7 @@ void GuiMenu::openControllersSettings_batocera(int autoSel)
 	// CONTROLLER ACTIVITY
 	auto activity = std::make_shared<SwitchComponent>(mWindow);
 	activity->setState(Settings::getInstance()->getBool("ShowControllerActivity"));
-	s->addWithLabel(_("MOSNTRAR CONTROLE ATIVO"), activity, autoSel == 1);
+	s->addWithLabel(_("MOSTRAR CONTROLE ATIVO"), activity, autoSel == 1);
 	activity->setOnChangedCallback([this, s, activity]
 	{
 		if (Settings::getInstance()->setBool("ShowControllerActivity", activity->getState()))
@@ -3646,14 +3646,14 @@ void GuiMenu::openUISettings()
 	auto pthis = this;
 	Window* window = mWindow;
 
-	auto s = new GuiSettings(mWindow, _("UI SETTINGS").c_str());
+	auto s = new GuiSettings(mWindow, _("CONFIGURAR UI").c_str());
 
 	// theme set
 	auto theme = ThemeData::getMenuTheme();
 	auto themeSets = ThemeData::getThemeSets();
 	auto system = ViewController::get()->getState().getSystem();
 
-	s->addGroup(_("APPEARANCE"));
+	s->addGroup(_("CONFIGURE MODOS DO TEMA"));
 
 	if (system != nullptr && !themeSets.empty())
 	{
@@ -3661,7 +3661,7 @@ void GuiMenu::openUISettings()
 		if (selectedSet == themeSets.end())
 			selectedSet = themeSets.begin();
 
-		auto theme_set = std::make_shared<OptionListComponent<std::string> >(mWindow, _("THEME SET"), false);
+		auto theme_set = std::make_shared<OptionListComponent<std::string> >(mWindow, _("CONFIGURE O TEMA"), false);
 
 		std::vector<std::string> themeList;
 		for (auto it = themeSets.begin(); it != themeSets.end(); it++)
@@ -3675,7 +3675,7 @@ void GuiMenu::openUISettings()
 		//for (auto it = themeSets.begin(); it != themeSets.end(); it++)
 		//	theme_set->add(it->first, it->first, it == selectedSet);
 
-		s->addWithLabel(_("THEME SET"), theme_set);
+		s->addWithLabel(_("CONFIGURE O TEMA"), theme_set);
 		s->addSaveFunc([s, theme_set, pthis, window, system]
 		{
 			std::string oldTheme = Settings::getInstance()->getString("ThemeSet");
@@ -3715,7 +3715,7 @@ void GuiMenu::openUISettings()
 		bool showThemeConfiguration = system->getTheme()->hasSubsets() || system->getTheme()->hasView("grid");
 		if (showThemeConfiguration)
 		{
-			s->addSubMenu(_("THEME CONFIGURATION"), [this, s, theme_set]() { openThemeConfiguration(mWindow, s, theme_set); });
+			s->addSubMenu(_(""), [this, s, theme_set]() { openThemeConfiguration(mWindow, s, theme_set); });
 		}
 		else // GameList view style only, acts like Retropie for simple themes
 		{
@@ -3877,7 +3877,7 @@ void GuiMenu::openUISettings()
 
         auto invertJoy = std::make_shared<SwitchComponent>(mWindow);
         invertJoy->setState(Settings::getInstance()->getBool("InvertButtons"));
-        s->addWithLabel(_("SWITCH A & B BUTTONS IN EMULATIONSTATION"), invertJoy);
+        s->addWithLabel(_("TROCAR BOTAO A & B NO EMULATIONSTATION"), invertJoy);
         s->addSaveFunc([this, s, invertJoy]
         {
                 if (Settings::getInstance()->setBool("InvertButtons", invertJoy->getState()))
@@ -3896,7 +3896,7 @@ void GuiMenu::openUISettings()
 	auto fps_enabled = std::make_shared<SwitchComponent>(mWindow);
 	bool fpsEnabled = SystemConf::getInstance()->get("global.showFPS") == "1";
 	fps_enabled->setState(fpsEnabled);
-	s->addWithLabel(_("SHOW RETROARCH FPS"), fps_enabled);
+	s->addWithLabel(_("MOSTRAR RETROARCH FPS"), fps_enabled);
 	s->addSaveFunc([fps_enabled] {
 		bool fpsenabled = fps_enabled->getState();
 	SystemConf::getInstance()->set("global.showFPS", fpsenabled ? "1" : "0");
@@ -3906,7 +3906,7 @@ void GuiMenu::openUISettings()
 	auto desktop_enabled = std::make_shared<SwitchComponent>(mWindow);
 	bool desktopEnabled = SystemConf::getInstance()->get("desktop.enabled") == "1";
 	desktop_enabled->setState(desktopEnabled);
-	s->addWithLabel(_("DESKTOP MODE"), desktop_enabled);
+	s->addWithLabel(_("MODO DE DESKTOP"), desktop_enabled);
 	s->addSaveFunc([this,desktop_enabled] {
 		if (desktop_enabled->changed()) {
 	                std::string msg = _("The system will restart")+"\n";
@@ -3922,9 +3922,9 @@ void GuiMenu::openUISettings()
 	});
 
 
-	s->addGroup(_("DISPLAY OPTIONS"));
+	s->addGroup(_("CONFIGURE O DISPLAY"));
 
-	s->addEntry(_("SCREENSAVER SETTINGS"), true, std::bind(&GuiMenu::openScreensaverOptions, this));
+	s->addEntry(_("CONFIGURAR SCREENSAVER"), true, std::bind(&GuiMenu::openScreensaverOptions, this));
 
 	// transition style
 	auto transition_style = std::make_shared<OptionListComponent<std::string> >(mWindow, _("LIST TRANSITION STYLE"), false);
