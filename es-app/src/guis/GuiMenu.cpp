@@ -3678,12 +3678,12 @@ void GuiMenu::openUISettings()
 		s->addWithLabel(_("CONFIGURE O TEMA"), theme_set);
 		s->addSaveFunc([s, theme_set, pthis, window, system]
 		{
-			//std::string oldTheme = Settings::getInstance()->getString("ThemeSet");
-			//if (oldTheme != theme_set->getSelected())
-			//{
-				//saveSubsetSettings();
+			std::string oldTheme = Settings::getInstance()->getString("ThemeSet");
+			if (oldTheme != theme_set->getSelected())
+			{
+				saveSubsetSettings();
 
-				//Settings::getInstance()->setString("ThemeSet", theme_set->getSelected());
+				Settings::getInstance()->setString("ThemeSet", theme_set->getSelected());
 
 				// theme changed without setting options, forcing options to avoid crash/blank theme
 				Settings::getInstance()->setString("ThemeRegionName", "");
